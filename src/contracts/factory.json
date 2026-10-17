@@ -1,0 +1,546 @@
+[
+  {
+    "type": "constructor",
+    "inputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "name": "InvalidAddress",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "InvalidCreatorAllocation",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "InvalidFeeRecipient",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "InvalidLaunchPreview",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "InvalidOwner",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "InvalidStartingPrice",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "Reentrancy",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "TokenCreated",
+    "type": "event",
+    "inputs": [
+      {
+        "name": "token",
+        "type": "address",
+        "indexed": true,
+        "internalType": "address"
+      },
+      {
+        "name": "owner",
+        "type": "address",
+        "indexed": true,
+        "internalType": "address"
+      },
+      {
+        "name": "creator",
+        "type": "address",
+        "indexed": true,
+        "internalType": "address"
+      },
+      {
+        "name": "hook",
+        "type": "address",
+        "indexed": false,
+        "internalType": "address"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "name": "TokenLaunched",
+    "type": "event",
+    "inputs": [
+      {
+        "name": "token",
+        "type": "address",
+        "indexed": true,
+        "internalType": "address"
+      },
+      {
+        "name": "owner",
+        "type": "address",
+        "indexed": true,
+        "internalType": "address"
+      },
+      {
+        "name": "creator",
+        "type": "address",
+        "indexed": true,
+        "internalType": "address"
+      },
+      {
+        "name": "hook",
+        "type": "address",
+        "indexed": false,
+        "internalType": "address"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "name": "create",
+    "type": "function",
+    "inputs": [
+      {
+        "name": "config",
+        "type": "tuple",
+        "components": [
+          {
+            "name": "name",
+            "type": "string",
+            "internalType": "string"
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "internalType": "string"
+          },
+          {
+            "name": "supply",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "lpSupply",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "owner",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "hook",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "quoteToken",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "positionManager",
+            "type": "address",
+            "internalType": "contract IPositionManager"
+          },
+          {
+            "name": "permit2",
+            "type": "address",
+            "internalType": "contract IAllowanceTransfer"
+          },
+          {
+            "name": "taxBps",
+            "type": "uint16",
+            "internalType": "uint16"
+          },
+          {
+            "name": "feeRecipient",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "launchTaxBps",
+            "type": "uint16",
+            "internalType": "uint16"
+          },
+          {
+            "name": "taxDecayIntervalSeconds",
+            "type": "uint32",
+            "internalType": "uint32"
+          },
+          {
+            "name": "feeDecayRecipient",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "internalType": "struct ERC20T.Config"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "token",
+        "type": "address",
+        "internalType": "contract ERC20T"
+      }
+    ],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "name": "createAndLaunch",
+    "type": "function",
+    "inputs": [
+      {
+        "name": "config",
+        "type": "tuple",
+        "components": [
+          {
+            "name": "name",
+            "type": "string",
+            "internalType": "string"
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "internalType": "string"
+          },
+          {
+            "name": "supply",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "lpSupply",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "owner",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "hook",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "quoteToken",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "positionManager",
+            "type": "address",
+            "internalType": "contract IPositionManager"
+          },
+          {
+            "name": "permit2",
+            "type": "address",
+            "internalType": "contract IAllowanceTransfer"
+          },
+          {
+            "name": "taxBps",
+            "type": "uint16",
+            "internalType": "uint16"
+          },
+          {
+            "name": "feeRecipient",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "launchTaxBps",
+            "type": "uint16",
+            "internalType": "uint16"
+          },
+          {
+            "name": "taxDecayIntervalSeconds",
+            "type": "uint32",
+            "internalType": "uint32"
+          },
+          {
+            "name": "feeDecayRecipient",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "internalType": "struct ERC20T.Config"
+      },
+      {
+        "name": "sqrtPriceX96",
+        "type": "uint160",
+        "internalType": "uint160"
+      },
+      {
+        "name": "tickLower",
+        "type": "int24",
+        "internalType": "int24"
+      },
+      {
+        "name": "tickUpper",
+        "type": "int24",
+        "internalType": "int24"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "token",
+        "type": "address",
+        "internalType": "contract ERC20T"
+      }
+    ],
+    "stateMutability": "payable"
+  },
+  {
+    "name": "createAndLaunchAtPrice",
+    "type": "function",
+    "inputs": [
+      {
+        "name": "config",
+        "type": "tuple",
+        "components": [
+          {
+            "name": "name",
+            "type": "string",
+            "internalType": "string"
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "internalType": "string"
+          },
+          {
+            "name": "supply",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "lpSupply",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "owner",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "hook",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "quoteToken",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "positionManager",
+            "type": "address",
+            "internalType": "contract IPositionManager"
+          },
+          {
+            "name": "permit2",
+            "type": "address",
+            "internalType": "contract IAllowanceTransfer"
+          },
+          {
+            "name": "taxBps",
+            "type": "uint16",
+            "internalType": "uint16"
+          },
+          {
+            "name": "feeRecipient",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "launchTaxBps",
+            "type": "uint16",
+            "internalType": "uint16"
+          },
+          {
+            "name": "taxDecayIntervalSeconds",
+            "type": "uint32",
+            "internalType": "uint32"
+          },
+          {
+            "name": "feeDecayRecipient",
+            "type": "address",
+            "internalType": "address"
+          }
+        ],
+        "internalType": "struct ERC20T.Config"
+      },
+      {
+        "name": "creatorAllocationBps",
+        "type": "uint16",
+        "internalType": "uint16"
+      },
+      {
+        "name": "startingPriceQuote",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "token",
+        "type": "address",
+        "internalType": "contract ERC20T"
+      }
+    ],
+    "stateMutability": "payable"
+  },
+  {
+    "name": "implementation",
+    "type": "function",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "address",
+        "internalType": "address"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "name": "previewLaunch",
+    "type": "function",
+    "inputs": [
+      {
+        "name": "supply",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "creatorAllocationBps",
+        "type": "uint16",
+        "internalType": "uint16"
+      },
+      {
+        "name": "startingPriceWei",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "preview",
+        "type": "tuple",
+        "components": [
+          {
+            "name": "creatorSupply",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "lpSupply",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "sqrtPriceX96",
+            "type": "uint160",
+            "internalType": "uint160"
+          },
+          {
+            "name": "tickLower",
+            "type": "int24",
+            "internalType": "int24"
+          },
+          {
+            "name": "tickUpper",
+            "type": "int24",
+            "internalType": "int24"
+          },
+          {
+            "name": "effectivePriceWei",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "internalType": "struct ERC20TFactory.LaunchPreview"
+      }
+    ],
+    "stateMutability": "pure"
+  },
+  {
+    "name": "previewQuotedLaunch",
+    "type": "function",
+    "inputs": [
+      {
+        "name": "supply",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "creatorAllocationBps",
+        "type": "uint16",
+        "internalType": "uint16"
+      },
+      {
+        "name": "startingPriceQuote",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "tokenIsCurrency0",
+        "type": "bool",
+        "internalType": "bool"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "preview",
+        "type": "tuple",
+        "components": [
+          {
+            "name": "creatorSupply",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "lpSupply",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "sqrtPriceX96",
+            "type": "uint160",
+            "internalType": "uint160"
+          },
+          {
+            "name": "tickLower",
+            "type": "int24",
+            "internalType": "int24"
+          },
+          {
+            "name": "tickUpper",
+            "type": "int24",
+            "internalType": "int24"
+          },
+          {
+            "name": "effectivePriceWei",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ],
+        "internalType": "struct ERC20TFactory.LaunchPreview"
+      }
+    ],
+    "stateMutability": "pure"
+  },
+  {
+    "type": "receive",
+    "stateMutability": "payable"
+  }
+]
